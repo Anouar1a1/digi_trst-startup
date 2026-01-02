@@ -1,3 +1,4 @@
+from werkzeug.security import generate_password_hash, check_password_hash
 from flask import Flask, render_template, request, redirect, url_for, session
 import hashlib
 import qrcode
@@ -58,10 +59,18 @@ def register():
         role = request.form.get('role')
         email = request.form.get('email')
         password = request.form.get('password')
-        users_db[email] = {'password': password, 'role': role}
+        
+        # SECURITY UPGRADE: Hash the password before saving!
+        # "pbkdf2:sha256" is a standard, strong encryption method.
+        secure_password = generate_password_hash(password, method='pbkdf2:sha256')
+        
+        # We save 'secure_password' (the scrambled mess), NOT 'password'
+        users_db[email] = {'password': secure_password, 'role': role}
+        
+        print(f"User saved with hash: {secure_password}") # Check your terminal to see the difference!
         return redirect(url_for('login'))
-    return render_template('register.html')
 
+    return render_template('register.html')
 @app.route('/generate_certificate', methods=['POST'])
 def generate_certificate():
     # Security Check: Are they logged in?
