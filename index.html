@@ -1,0 +1,366 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitrst | The Standard for Verifiable Truth</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-dark: #0f172a;
+            --primary-light: #1e293b;
+            --accent-gold: #d4af37;
+            --accent-gold-hover: #b5952f;
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+            --glass-bg: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.05);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            overflow-x: hidden;
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 5%;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .logo {
+            font-family: 'Cinzel', serif;
+            font-size: 1.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
+        .logo span { color: var(--accent-gold); }
+
+        .nav-links a {
+            color: var(--text-light);
+            text-decoration: none;
+            margin-left: 2rem;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+        }
+        .nav-links a:hover { color: var(--accent-gold); }
+
+        .btn-nav {
+            padding: 0.6rem 1.5rem;
+            border: 1px solid var(--accent-gold);
+            border-radius: 4px;
+            color: var(--accent-gold);
+            transition: all 0.3s;
+        }
+        .btn-nav:hover {
+            background: var(--accent-gold);
+            color: var(--primary-dark);
+        }
+
+        /* --- HERO SECTION --- */
+        header {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 10%;
+            background: radial-gradient(circle at 70% 50%, #1e293b 0%, #0f172a 60%);
+            position: relative;
+        }
+
+        .hero-text {
+            flex: 1;
+            max-width: 600px;
+            z-index: 2;
+        }
+
+        h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 3.5rem;
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+        h1 span { color: var(--accent-gold); }
+
+        .hero-subtitle {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+            margin-bottom: 2.5rem;
+            line-height: 1.6;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 1rem;
+        }
+
+        .btn-primary {
+            padding: 1rem 2rem;
+            background: linear-gradient(to right, #d4af37, #f3cf55);
+            color: var(--primary-dark);
+            text-decoration: none;
+            font-weight: 700;
+            border-radius: 4px;
+            transition: transform 0.2s;
+        }
+        .btn-primary:hover { transform: translateY(-3px); }
+
+        .btn-secondary {
+            padding: 1rem 2rem;
+            background: transparent;
+            border: 1px solid var(--glass-border);
+            color: var(--text-light);
+            text-decoration: none;
+            border-radius: 4px;
+            transition: all 0.2s;
+        }
+        .btn-secondary:hover { border-color: var(--accent-gold); color: var(--accent-gold); }
+
+        /* --- ANIMATED SEAL (RIGHT SIDE) --- */
+        .hero-visual {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        /* Shield Pulse Animation */
+        @keyframes sealPulse {
+            0% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0.4); }
+            70% { box-shadow: 0 0 0 60px rgba(212, 175, 55, 0); }
+            100% { box-shadow: 0 0 0 0 rgba(212, 175, 55, 0); }
+        }
+
+        .digital-seal {
+            width: 250px;
+            height: 250px;
+            background: linear-gradient(135deg, #1e293b, #0f172a);
+            border: 2px solid var(--accent-gold);
+            border-radius: 50%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            animation: sealPulse 3s infinite;
+        }
+
+        .digital-seal i {
+            font-size: 5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1rem;
+        }
+        .digital-seal span {
+            font-family: 'Cinzel', serif;
+            color: var(--accent-gold);
+            letter-spacing: 2px;
+            font-size: 0.9rem;
+        }
+
+        /* --- QUICK VERIFY STRIP --- */
+        .verify-strip {
+            background: var(--primary-light);
+            padding: 3rem 10%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .verify-box {
+            background: var(--primary-dark);
+            border: 1px solid var(--accent-gold);
+            padding: 0.5rem;
+            border-radius: 50px;
+            display: flex;
+            width: 100%;
+            max-width: 700px;
+        }
+
+        .verify-box input {
+            flex: 1;
+            background: transparent;
+            border: none;
+            padding: 1rem 2rem;
+            color: white;
+            font-size: 1rem;
+            outline: none;
+        }
+
+        .verify-box button {
+            background: var(--accent-gold);
+            border: none;
+            padding: 0.8rem 2.5rem;
+            border-radius: 50px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.2s;
+        }
+        .verify-box button:hover { background: var(--accent-gold-hover); }
+
+        /* --- SERVICES SECTION --- */
+        .services {
+            padding: 6rem 10%;
+            text-align: center;
+        }
+
+        .section-title {
+            font-family: 'Cinzel', serif;
+            font-size: 2.5rem;
+            margin-bottom: 4rem;
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 3rem 2rem;
+            border-radius: 12px;
+            text-align: left;
+            transition: transform 0.3s, border-color 0.3s;
+        }
+
+        .card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent-gold);
+        }
+
+        .card-icon {
+            font-size: 2.5rem;
+            color: var(--accent-gold);
+            margin-bottom: 1.5rem;
+        }
+
+        .card h3 {
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            font-family: 'Cinzel', serif;
+        }
+
+        .card p {
+            color: var(--text-muted);
+            line-height: 1.6;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            padding: 4rem 10%;
+            background: #050911;
+            border-top: 1px solid var(--glass-border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .footer-logo { font-family: 'Cinzel'; font-size: 1.5rem; }
+        .footer-links a { color: var(--text-muted); margin-left: 1.5rem; text-decoration: none; }
+        .footer-links a:hover { color: var(--accent-gold); }
+
+        /* Mobile */
+        @media (max-width: 900px) {
+            header { flex-direction: column; text-align: center; padding-top: 8rem; height: auto; padding-bottom: 4rem;}
+            .hero-visual { margin-top: 3rem; }
+            .hero-buttons { justify-content: center; }
+            nav { display: none; } /* Simplified for demo */
+            .verify-strip { padding: 2rem 5%; }
+            .verify-box { flex-direction: column; background: transparent; border: none; }
+            .verify-box input { border: 1px solid var(--glass-border); margin-bottom: 1rem; background: var(--primary-dark); border-radius: 8px;}
+        }
+    </style>
+</head>
+<body>
+
+    <nav>
+        <div class="logo">digi<span>trst</span>.</div>
+        <div class="nav-links">
+            <a href="#">Solutions</a>
+            <a href="#">Pricing</a>
+            <a href="#">Developers</a>
+            <a href="login.html" class="btn-nav">Client Login</a>
+        </div>
+    </nav>
+
+    <header>
+        <div class="hero-text">
+            <h1>The Gold Standard of <br> <span>Immutable Truth.</span></h1>
+            <p class="hero-subtitle">
+                Issue blockchain-verified diplomas, certificates, and signatures. 
+                Fraud-proof. Instantly verifiable. Forever secure.
+            </p>
+            <div class="hero-buttons">
+                <a href="#" class="btn-primary">Start Issuing</a>
+                <a href="#verify" class="btn-secondary">How it Works</a>
+            </div>
+        </div>
+
+        <div class="hero-visual">
+            <div class="digital-seal">
+                <i class="fas fa-check-double"></i>
+                <span>Verified</span>
+            </div>
+        </div>
+    </header>
+
+    <div class="verify-strip" id="verify">
+        <div class="verify-box">
+            <input type="text" placeholder="Enter Certificate ID or Hash (e.g. 0x8f2...)">
+            <button>VERIFY NOW</button>
+        </div>
+    </div>
+
+    <section class="services">
+        <h2 class="section-title">Cryptographic Services</h2>
+        
+        <div class="cards-grid">
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-graduation-cap"></i></div>
+                <h3>Smart Diplomas</h3>
+                <p>Convert university degrees into tamper-proof digital assets. Prevent résumé fraud with one-click verification.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-qrcode"></i></div>
+                <h3>Dynamic QR</h3>
+                <p>Bridge the physical and digital. Our secure QR codes cannot be faked or copied to other documents.</p>
+            </div>
+
+            <div class="card">
+                <div class="card-icon"><i class="fas fa-file-signature"></i></div>
+                <h3>Digital Signatures</h3>
+                <p>Enterprise-grade signing for contracts. Cryptographically bound to the identity of the signer.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="footer-logo">digi<span>trst</span>.</div>
+        <div class="footer-links">
+            <a href="#">Privacy Policy</a>
+            <a href="#">Terms of Service</a>
+            <a href="#">Contact Support</a>
+        </div>
+    </footer>
+
+</body>
+</html>

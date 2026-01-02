@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Create Account | Digitrst</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Inter:wght@300;400;600&display=swap');
+
+        :root {
+            --primary-dark: #0f172a;
+            --accent-gold: #d4af37;
+            --glass-bg: rgba(255, 255, 255, 0.05);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --text-light: #f8fafc;
+            --text-muted: #94a3b8;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--primary-dark);
+            color: var(--text-light);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background-image: radial-gradient(circle at 50% 10%, #1e293b 0%, #0f172a 60%);
+        }
+
+        .container {
+            width: 100%;
+            max-width: 500px;
+            padding: 2rem;
+        }
+
+        .card {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            padding: 2.5rem;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
+        }
+
+        .header { text-align: center; margin-bottom: 2rem; }
+        .header h2 { font-family: 'Cinzel', serif; font-size: 2rem; margin-bottom: 0.5rem; }
+        .header span { color: var(--accent-gold); }
+
+        /* --- THE TOGGLE SWITCH --- */
+        .type-toggle {
+            display: flex;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .toggle-option {
+            flex: 1;
+            text-align: center;
+            padding: 1rem;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 0.9rem;
+            transition: color 0.3s;
+            z-index: 2;
+        }
+
+        /* The sliding gold background */
+        .toggle-bg {
+            position: absolute;
+            top: 0; left: 0;
+            width: 50%;
+            height: 100%;
+            background: var(--accent-gold);
+            transition: transform 0.3s ease;
+            z-index: 1;
+        }
+
+        .toggle-option.active { color: var(--primary-dark); }
+        .toggle-option.inactive { color: var(--text-muted); }
+
+        /* --- FORM FIELDS --- */
+        .input-group { margin-bottom: 1.2rem; }
+        .input-group label { display: block; margin-bottom: 0.4rem; font-size: 0.8rem; color: var(--accent-gold); font-weight: 600; }
+        
+        .input-wrapper { position: relative; }
+        .input-wrapper i { position: absolute; left: 1rem; top: 50%; transform: translateY(-50%); color: var(--text-muted); }
+        
+        input {
+            width: 100%;
+            padding: 0.9rem 1rem 0.9rem 3rem;
+            background: rgba(15, 23, 42, 0.6);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: white;
+            font-size: 0.95rem;
+        }
+        input:focus { outline: none; border-color: var(--accent-gold); }
+
+        .btn-submit {
+            width: 100%;
+            padding: 1rem;
+            background: linear-gradient(to right, #d4af37, #f3cf55);
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-top: 1rem;
+            transition: transform 0.2s;
+        }
+        .btn-submit:hover { transform: translateY(-2px); }
+
+        .hidden { display: none; }
+        
+        .login-link { text-align: center; margin-top: 1.5rem; font-size: 0.85rem; color: var(--text-muted); }
+        .login-link a { color: var(--accent-gold); text-decoration: none; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div class="card">
+        <div class="header">
+            <h2>Join Digi<span>trst</span></h2>
+            <p>Select your account type</p>
+        </div>
+
+        <div class="type-toggle" id="typeToggle">
+            <div class="toggle-bg" id="toggleBg"></div>
+            <div class="toggle-option active" onclick="setRole('individual')">INDIVIDUAL</div>
+            <div class="toggle-option inactive" onclick="setRole('society')">SOCIETY</div>
+        </div>
+
+        <form action="/register" method="POST">
+            <input type="hidden" name="role" id="roleInput" value="individual">
+
+            <div id="individual-fields">
+                <div class="input-group">
+                    <label>FULL NAME</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-user"></i>
+                        <input type="text" name="fullname" placeholder="John Doe">
+                    </div>
+                </div>
+            </div>
+
+            <div id="society-fields" class="hidden">
+                <div class="input-group">
+                    <label>ORGANIZATION NAME</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-building"></i>
+                        <input type="text" name="org_name" placeholder="University or Company Inc.">
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label>REGISTRATION ID (ICE/RC)</label>
+                    <div class="input-wrapper">
+                        <i class="fas fa-file-contract"></i>
+                        <input type="text" name="reg_id" placeholder="Official Tax ID">
+                    </div>
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>EMAIL ADDRESS</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-envelope"></i>
+                    <input type="email" name="email" required placeholder="name@example.com">
+                </div>
+            </div>
+
+            <div class="input-group">
+                <label>PASSWORD</label>
+                <div class="input-wrapper">
+                    <i class="fas fa-lock"></i>
+                    <input type="password" name="password" required placeholder="••••••••">
+                </div>
+            </div>
+
+            <button type="submit" class="btn-submit">CREATE ACCOUNT</button>
+        </form>
+
+        <div class="login-link">
+            Already have an account? <a href="login.html">Log In</a>
+        </div>
+    </div>
+</div>
+
+<script>
+    function setRole(role) {
+        const bg = document.getElementById('toggleBg');
+        const indiv = document.getElementById('individual-fields');
+        const society = document.getElementById('society-fields');
+        const input = document.getElementById('roleInput');
+        const opts = document.querySelectorAll('.toggle-option');
+
+        if (role === 'society') {
+            bg.style.transform = 'translateX(100%)';
+            indiv.classList.add('hidden');
+            society.classList.remove('hidden');
+            input.value = 'society';
+            opts[0].classList.replace('active', 'inactive');
+            opts[1].classList.replace('inactive', 'active');
+        } else {
+            bg.style.transform = 'translateX(0)';
+            society.classList.add('hidden');
+            indiv.classList.remove('hidden');
+            input.value = 'individual';
+            opts[1].classList.replace('active', 'inactive');
+            opts[0].classList.replace('inactive', 'active');
+        }
+    }
+</script>
+
+</body>
+</html>
