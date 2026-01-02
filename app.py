@@ -24,18 +24,22 @@ def home():
 def login():
     if request.method == 'POST':
         email = request.form.get('email')
-        password = request.form.get('password')
+        password_input = request.form.get('password')
         
-        if email in users_db and users_db[email]['password'] == password:
-            # --- THE FIX IS HERE ---
-            # Instead of just showing the page, we give them an ID badge (Session)
-            session['user'] = email 
-            return redirect(url_for('dashboard'))
+        if email in users_db:
+            # Get the hash we stored during registration
+            stored_hash = users_db[email]['password']
+            
+            # SECURITY UPGRADE: Check if the input matches the hash
+            if check_password_hash(stored_hash, password_input):
+                session['user'] = email 
+                return redirect(url_for('dashboard'))
+            else:
+                return "Wrong password."
         else:
-            return "Wrong password. <a href='/login'>Try Again</a>"
+            return "User not found."
 
     return render_template('login.html')
-
 @app.route('/dashboard')
 def dashboard():
     # 1. CHECK ID BADGE
