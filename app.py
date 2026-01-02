@@ -12,24 +12,31 @@ def home():
     return render_template('index.html')
 
 @app.route('/login', methods=['GET', 'POST'])
+# app.py
+
+# ... imports and setup ...
+
+# 1. THE LOGIN ROUTE (Redirects to Dashboard on success)
+@app.route('/login', methods=['GET', 'POST'])
 def login():
     if request.method == 'POST':
-        # Get data from the form
-        email = request.form.get('email') # Need to add name="email" to your login.html inputs
+        email = request.form.get('email')
         password = request.form.get('password')
         
-        # Simple Logic to check if user exists
-        if email in users_db:
-            # Check password (in real life, use bcrypt, don't just compare strings)
-            stored_password = users_db[email]['password']
-            if password == stored_password:
-                return f"Welcome back! You are logged in as: {users_db[email]['role']}"
-            else:
-                return "Wrong password!"
+        # Check against your database
+        if email in users_db and users_db[email]['password'] == password:
+            # SUCCESS: Render the dashboard and pass the email as 'username'
+            return render_template('dashboard.html', username=email)
         else:
-            return "User not found."
+            return "Wrong password. <a href='/login'>Try Again</a>"
 
     return render_template('login.html')
+
+# 2. THE DASHBOARD ROUTE (So the page exists)
+@app.route('/dashboard')
+def dashboard():
+    # In a real app, check if user is logged in here!
+    return render_template('dashboard.html', username="Guest")
 
 @app.route('/register', methods=['GET', 'POST'])
 def register():
